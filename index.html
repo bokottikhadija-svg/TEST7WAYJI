@@ -147,7 +147,12 @@
   <nav class="sticky top-0 z-[100] bg-white/80 backdrop-blur-md border-b border-[#f0f0ed]">
     <div class="max-w-[1600px] mx-auto px-6 h-20 md:h-24 flex justify-between items-center">
       <div class="flex items-center space-x-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <div class="w-10 h-10 border-2 border-black flex items-center justify-center font-black text-xs">KH</div>
+
+        <!-- ✅ LOGO (chemin demandé) - on garde le même cadre que "KH" -->
+        <div class="w-10 h-10 border-2 border-black flex items-center justify-center">
+          <img src="assets/logo de la marque .jpg" alt="Logo Khoud-7wayji" class="w-8 h-8 object-contain" />
+        </div>
+
         <div class="flex flex-col">
           <span class="serif text-xl font-bold tracking-tighter uppercase">KHOUD-7WAYJI</span>
           <span class="text-[7px] tracking-[0.4em] uppercase opacity-40 font-bold">L-STYLE DYALEK</span>
@@ -503,7 +508,7 @@
     }
 
     // =========================
-    // Checkout WhatsApp (FIX ✅)
+    // Checkout WhatsApp (tel quel dans ton code)
     // =========================
     document.getElementById('checkoutForm').onsubmit = (e) => {
       e.preventDefault();
@@ -529,7 +534,6 @@ TOTAL: ${total} MAD`;
 
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
-      // ✅ plus fiable sur GitHub Pages
       window.location.href = url;
 
       cart = [];
