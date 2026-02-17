@@ -164,7 +164,7 @@
 </head>
 <body>
 
-  <!-- Loading Screen -->
+  <!-- Écran de chargement -->
   <div id="loader">
     <div class="spinner"></div>
     <p class="mt-4 serif italic text-xl">Khoud-7wayji</p>
@@ -190,7 +190,7 @@
     </div>
   </nav>
 
-  <!-- CART ICON -->
+  <!-- ICON PANIER -->
   <div id="cartIcon" style="display:none" onclick="openModal('cartModal')">
     <i class="fa-solid fa-shopping-bag"></i>
     <div id="cartBadge">0</div>
@@ -207,7 +207,7 @@
     </div>
   </header>
 
-  <!-- CATEGORIES -->
+  <!-- CATÉGORIES -->
   <section class="max-w-[1400px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="market-locker" onclick="filterGallery('homme')">
       <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1200&auto=format&fit=crop" alt="Homme">
@@ -217,7 +217,6 @@
       </div>
     </div>
     <div class="market-locker" onclick="filterGallery('femme')">
-      <!-- Nouvelle image Femme mise à jour -->
       <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=1200&auto=format&fit=crop" alt="Femme">
       <div class="locker-overlay text-white">
         <h2 class="serif text-6xl italic mb-2">Femmes</h2>
@@ -226,7 +225,7 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- À PROPOS -->
   <section id="about" class="max-w-[1100px] mx-auto px-6 py-32 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
     <div class="bg-gray-100 p-4">
         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" class="w-full grayscale brightness-90">
@@ -235,14 +234,13 @@
       <h2 class="serif text-6xl italic">Notre Vision</h2>
       <div class="text-gray-600 space-y-4 leading-relaxed text-lg">
         <p><strong>Khoud-7wayji</strong> est une plateforme marocaine dédiée à la seconde main et à la réutilisation de vêtements.</p>
-        <p>Nous permettons à chacun de vendre ou acheter des articles de mode tout en donnant une seconde vie aux pièces déjà aimées. Notre objectif est de rendre la mode plus accessible, plus responsable et plus durable.</p>
-        <p>Chez Khoud-7wayji, nous croyons qu’un vêtement ne se jette pas… il se partage. Rejoignez notre communauté et renouvelez votre style autrement.</p>
-        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter pour toute question ou collaboration.</p>
+        <p>Nous permettons à chacun de vendre ou acheter des articles de mode tout en donnant une seconde vie aux pièces déjà aimées.</p>
+        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter sur Instagram @khoud_7wayji.</p>
       </div>
     </div>
   </section>
 
-  <!-- MARKETPLACE -->
+  <!-- BOUTIQUE -->
   <main id="market-section" class="max-w-[1400px] mx-auto px-6 py-20 border-t border-gray-100">
     <div class="flex flex-col md:flex-row justify-between items-end mb-12">
       <h3 id="galleryTitle" class="serif text-5xl italic">Le Vestiaire</h3>
@@ -251,7 +249,7 @@
     <div id="galleryContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12"></div>
   </main>
 
-  <!-- ADMIN SECTION -->
+  <!-- PANNEAU ADMIN -->
   <section id="adminPanel" style="display:none;" class="py-24 bg-neutral-100 border-y border-neutral-200">
     <div class="max-w-[500px] mx-auto px-6">
         <div class="flex justify-between items-center mb-10">
@@ -290,25 +288,8 @@
           <span class="text-xs font-bold uppercase tracking-widest">Suivre l'aventure</span>
         </a>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-20 py-20">
-        <div>
-          <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] mb-8 opacity-30">Contact</h4>
-          <p class="text-sm opacity-60">WhatsApp: +212 7 73 51 57 53</p>
-          <p class="text-sm opacity-60 mt-2">Email: khoud7wayji@gmail.com</p>
-        </div>
-        <div>
-          <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] mb-8 opacity-30">Menu</h4>
-          <div class="flex flex-col space-y-3 text-xs uppercase font-bold tracking-widest opacity-60">
-            <a href="#" class="hover:opacity-100">Accueil</a>
-            <a href="#about" class="hover:opacity-100">À Propos</a>
-            <a href="#market-section" class="hover:opacity-100">Boutique</a>
-          </div>
-        </div>
-        <div class="md:text-right">
-          <button onclick="openModal('adminLoginModal')" class="text-[10px] uppercase font-bold tracking-widest opacity-20 hover:opacity-100">Espace Admin</button>
-          <p class="text-[9px] uppercase tracking-widest opacity-20 mt-12">© 2024 KHOUD-7WAYJI · MAROC</p>
-        </div>
+      <div class="text-right py-10">
+        <button onclick="openModal('adminLoginModal')" class="text-[10px] uppercase font-bold tracking-widest opacity-20 hover:opacity-100">Admin</button>
       </div>
     </div>
   </footer>
@@ -346,7 +327,7 @@
   <div id="adminLoginModal" class="modal">
     <div class="modal-content text-center">
       <button onclick="closeModal('adminLoginModal')" class="absolute top-6 right-6 text-xl">&times;</button>
-      <h2 class="serif text-4xl mb-8 italic">Accès Restreint</h2>
+      <h2 class="serif text-4xl mb-8 italic">Accès Admin</h2>
       <form id="adminLoginForm">
         <input type="email" id="adminEmail" placeholder="Email Admin" required class="input-classic">
         <input type="password" id="adminPass" placeholder="Mot de passe" required class="input-classic">
@@ -366,212 +347,197 @@
     import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, doc, addDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const firebaseConfig = JSON.parse(__firebase_config);
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'khoud-7wayji-main';
-
-    let articles = [];
-    let cart = [];
-    let isAdmin = false;
-    let currentFilter = 'all';
-
-    const ADMIN_CREDS = { email: 'admin@khoud.ma', pass: 'admin123' };
-    const WA_NUMBER = "212773515753";
-
-    const setupAuth = async () => {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-            await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-            await signInAnonymously(auth);
-        }
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-            listenToStore();
-        }
-    });
-
-    setupAuth();
-
-    function listenToStore() {
-        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), (snap) => {
-            articles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            articles.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-            renderGallery(currentFilter);
-        });
+    // --- CONFIGURATION FIREBASE ---
+    // Si tu es sur GitHub Pages, tu dois remplacer l'objet ci-dessous par tes propres clés Firebase
+    // Récupère-les sur console.firebase.google.com
+    let firebaseConfig;
+    try {
+        firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+    } catch(e) {
+        firebaseConfig = {};
     }
 
-    window.filterGallery = (cat) => {
-        currentFilter = cat;
-        document.getElementById('galleryTitle').innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
-        document.getElementById('market-section').scrollIntoView({ behavior: 'smooth' });
-        renderGallery(cat);
-    };
-
-    function renderGallery(filter) {
-        const container = document.getElementById('galleryContainer');
-        const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
-        document.getElementById('itemCount').innerText = `${items.length} PIÈCES`;
-
-        if (items.length === 0) {
-            container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Nouvel arrivage bientôt...</div>`;
-            return;
+    // Sécurité Loader : S'il n'y a pas de config (cas GitHub sans config injectée), on enlève le loader après 2s
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader && loader.style.display !== 'none') {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+            console.warn("Firebase non configuré : Affichage en mode démo.");
         }
+    }, 2500);
 
-        container.innerHTML = items.map(item => `
-            <div class="group">
-                <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
-                    <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size}</div>
-                    ${isAdmin ? 
-                        `<button onclick="deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>` :
-                        `<button onclick="addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
-                    }
-                </div>
-                <div class="flex justify-between items-center">
-                    <h4 class="serif text-xl font-bold">${item.name}</h4>
-                    <span class="text-[10px] font-bold opacity-40">${item.price} MAD</span>
-                </div>
-                ${!isAdmin ? `<button onclick="addToCart('${item.id}')" class="md:hidden mt-4 w-full text-[9px] font-bold uppercase border border-black py-2">Ajouter au panier</button>` : ''}
-            </div>
-        `).join('');
-    }
+    // Initialisation uniquement si la config existe
+    if (firebaseConfig.apiKey) {
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'khoud-7wayji-external';
 
-    window.addToCart = (id) => {
-        const item = articles.find(a => a.id === id);
-        if (cart.find(c => c.id === id)) return notify("Déjà dans le panier");
-        cart.push(item);
-        updateCartBadge();
-        notify("Article ajouté !");
-    };
+        let articles = [];
+        let cart = [];
+        let isAdmin = false;
+        let currentFilter = 'all';
 
-    function updateCartBadge() {
-        const badge = document.getElementById('cartBadge');
-        const icon = document.getElementById('cartIcon');
-        badge.innerText = cart.length;
-        icon.style.display = cart.length > 0 && !isAdmin ? 'flex' : 'none';
-    }
+        const ADMIN_CREDS = { email: 'admin@khoud.ma', pass: 'admin123' };
+        const WA_NUMBER = "212773515753";
 
-    window.renderCartItems = () => {
-        const list = document.getElementById('cartItemsList');
-        const summary = document.getElementById('cartSummary');
-        const empty = document.getElementById('cartEmpty');
-        
-        if (cart.length === 0) {
-            list.innerHTML = "";
-            summary.style.display = "none";
-            empty.style.display = "block";
-            return;
-        }
-
-        empty.style.display = "none";
-        summary.style.display = "block";
-        list.innerHTML = cart.map(item => `
-            <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-100">
-                <img src="${item.imageUrl}" class="w-16 h-20 object-cover">
-                <div class="flex-1">
-                    <p class="serif font-bold">${item.name}</p>
-                    <p class="text-[10px] opacity-40 uppercase font-bold tracking-widest">${item.size} · ${item.price} MAD</p>
-                </div>
-                <button onclick="removeFromCart('${item.id}')" class="text-xl">&times;</button>
-            </div>
-        `).join('');
-
-        const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
-        document.getElementById('cartTotal').innerText = `${total} MAD`;
-    };
-
-    window.removeFromCart = (id) => {
-        cart = cart.filter(c => c.id !== id);
-        updateCartBadge();
-        renderCartItems();
-    };
-
-    document.getElementById('checkoutForm').onsubmit = (e) => {
-        e.preventDefault();
-        const name = document.getElementById('custName').value;
-        const city = document.getElementById('custCity').value;
-        const addr = document.getElementById('custAddress').value;
-        const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
-
-        let msg = `*COMMANDE KHOUD-7WAYJI*%0A%0A`;
-        msg += `*Client:* ${name}%0A*Ville:* ${city}%0A*Adresse:* ${addr}%0A%0A*Articles:*%0A`;
-        cart.forEach(i => msg += `- ${i.name} (${i.size}) : ${i.price} MAD%0A`);
-        msg += `%0A*TOTAL: ${total} MAD*`;
-
-        window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-        cart = [];
-        updateCartBadge();
-        closeModal('checkoutModal');
-        notify("Redirection WhatsApp...");
-    };
-
-    document.getElementById('adminLoginForm').onsubmit = (e) => {
-        e.preventDefault();
-        const email = document.getElementById('adminEmail').value;
-        const pass = document.getElementById('adminPass').value;
-        if (email === ADMIN_CREDS.email && pass === ADMIN_CREDS.pass) {
-            isAdmin = true;
-            closeModal('adminLoginModal');
-            document.getElementById('adminPanel').style.display = 'block';
-            updateCartBadge();
-            renderGallery(currentFilter);
-            notify("Bonjour Admin");
-            window.scrollTo({top: document.getElementById('adminPanel').offsetTop - 100, behavior: 'smooth'});
-        } else {
-            notify("Identifiants incorrects");
-        }
-    };
-
-    window.logoutAdmin = () => {
-        isAdmin = false;
-        document.getElementById('adminPanel').style.display = 'none';
-        renderGallery(currentFilter);
-        notify("Déconnecté");
-    };
-
-    document.getElementById('adminAddForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const file = document.getElementById('adminImage').files[0];
-        if (!file) return notify("Photo manquante");
-
-        const btn = document.getElementById('addBtn');
-        btn.disabled = true;
-        btn.innerText = "Ajout en cours...";
-
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = async () => {
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), {
-                name: document.getElementById('adminName').value,
-                category: document.getElementById('adminCategory').value,
-                size: document.getElementById('adminSize').value,
-                price: document.getElementById('adminPrice').value,
-                imageUrl: reader.result,
-                createdAt: new Date().toISOString()
-            });
-            document.getElementById('adminAddForm').reset();
-            btn.disabled = false;
-            btn.innerText = "Ajouter au catalogue";
-            notify("Article publié !");
+        const setupAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
         };
-    };
 
-    window.deleteItem = async (id) => {
-        if (confirm("Supprimer cet article ?")) {
-            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'articles', id));
-            notify("Article retiré");
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+                listenToStore(db, appId);
+            }
+        });
+
+        setupAuth();
+
+        function listenToStore(db, appId) {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), (snap) => {
+                articles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                articles.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                renderGallery(currentFilter);
+            });
         }
-    };
 
+        // Fonctions Globales
+        window.filterGallery = (cat) => {
+            currentFilter = cat;
+            document.getElementById('galleryTitle').innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
+            document.getElementById('market-section').scrollIntoView({ behavior: 'smooth' });
+            renderGallery(cat);
+        };
+
+        function renderGallery(filter) {
+            const container = document.getElementById('galleryContainer');
+            const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
+            document.getElementById('itemCount').innerText = `${items.length} PIÈCES`;
+
+            if (items.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Arrivage en cours...</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(item => `
+                <div class="group">
+                    <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
+                        <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size}</div>
+                        ${isAdmin ? 
+                            `<button onclick="deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>` :
+                            `<button onclick="addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
+                        }
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <h4 class="serif text-xl font-bold">${item.name}</h4>
+                        <span class="text-[10px] font-bold opacity-40">${item.price} MAD</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.addToCart = (id) => {
+            const item = articles.find(a => a.id === id);
+            if (cart.find(c => c.id === id)) return notify("Déjà ajouté");
+            cart.push(item);
+            updateCartBadge();
+            notify("Ajouté au panier !");
+        };
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const icon = document.getElementById('cartIcon');
+            badge.innerText = cart.length;
+            icon.style.display = cart.length > 0 && !isAdmin ? 'flex' : 'none';
+        }
+
+        window.renderCartItems = () => {
+            const list = document.getElementById('cartItemsList');
+            const summary = document.getElementById('cartSummary');
+            const empty = document.getElementById('cartEmpty');
+            if (cart.length === 0) {
+                list.innerHTML = ""; summary.style.display = "none"; empty.style.display = "block";
+                return;
+            }
+            empty.style.display = "none"; summary.style.display = "block";
+            list.innerHTML = cart.map(item => `
+                <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-100">
+                    <img src="${item.imageUrl}" class="w-16 h-20 object-cover">
+                    <div class="flex-1">
+                        <p class="serif font-bold">${item.name}</p>
+                        <p class="text-[10px] opacity-40 uppercase font-bold tracking-widest">${item.size} · ${item.price} MAD</p>
+                    </div>
+                    <button onclick="removeFromCart('${item.id}')" class="text-xl">&times;</button>
+                </div>
+            `).join('');
+            const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
+            document.getElementById('cartTotal').innerText = `${total} MAD`;
+        };
+
+        window.removeFromCart = (id) => {
+            cart = cart.filter(c => c.id !== id);
+            updateCartBadge();
+            renderCartItems();
+        };
+
+        document.getElementById('checkoutForm').onsubmit = (e) => {
+            e.preventDefault();
+            const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
+            let msg = `*KHOUD-7WAYJI*%0A*Client:* ${document.getElementById('custName').value}%0A*Ville:* ${document.getElementById('custCity').value}%0A%0A*Articles:*%0A`;
+            cart.forEach(i => msg += `- ${i.name} (${i.size}) : ${i.price} MAD%0A`);
+            msg += `%0A*TOTAL: ${total} MAD*`;
+            window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+        };
+
+        document.getElementById('adminLoginForm').onsubmit = (e) => {
+            e.preventDefault();
+            if (document.getElementById('adminEmail').value === ADMIN_CREDS.email && document.getElementById('adminPass').value === ADMIN_CREDS.pass) {
+                isAdmin = true;
+                closeModal('adminLoginModal');
+                document.getElementById('adminPanel').style.display = 'block';
+                renderGallery(currentFilter);
+            }
+        };
+
+        window.logoutAdmin = () => { isAdmin = false; document.getElementById('adminPanel').style.display = 'none'; renderGallery(currentFilter); };
+
+        document.getElementById('adminAddForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('adminImage').files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async () => {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), {
+                    name: document.getElementById('adminName').value,
+                    category: document.getElementById('adminCategory').value,
+                    size: document.getElementById('adminSize').value,
+                    price: document.getElementById('adminPrice').value,
+                    imageUrl: reader.result,
+                    createdAt: new Date().toISOString()
+                });
+                document.getElementById('adminAddForm').reset();
+            };
+        };
+
+        window.deleteItem = async (id) => {
+            if (confirm("Supprimer ?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'articles', id));
+        };
+    }
+
+    // Modal helpers
     window.openModal = (id) => {
         document.getElementById(id).style.display = 'flex';
-        if(id === 'cartModal') renderCartItems();
+        if(id === 'cartModal' && window.renderCartItems) renderCartItems();
     };
     window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
     window.notify = (msg) => {
@@ -580,7 +546,6 @@
         el.style.opacity = '1';
         setTimeout(() => el.style.opacity = '0', 3000);
     };
-
     window.onclick = (e) => { if(e.target.classList.contains('modal')) closeModal(e.target.id); };
   </script>
 </body>
