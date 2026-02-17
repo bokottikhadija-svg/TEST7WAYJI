@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khoud-7wayji | Boutique d'Échange & Seconde Main</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root{
+      --balna-bg:#fdfdfb;
+      --balna-accent:#0d0d0d;
+      --balna-border:#e8e8e3;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--balna-bg);
+      color:var(--balna-accent);
+      margin:0;
+      min-height:100vh;
+      scroll-behavior:smooth;
+    }
+
+    h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(255,255,255,.98);
+      z-index:10000;
+      backdrop-filter:blur(10px);
+      align-items:center;
+      justify-content:center;
+      overflow-y:auto;
+      padding:20px;
+    }
+
+    .modal-content{
+      background:#fff;
+      width:100%;
+      max-width:500px;
+      padding:40px;
+      box-shadow:0 25px 50px -12px rgba(0,0,0,.1);
+      position:relative;
+      margin:auto;
+    }
+
+    .form-group{margin-bottom:20px;}
+
+    .form-label{
+      display:block;
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      margin-bottom:8px;
+      color:#4a4a4a;
+    }
+
+    .input-classic{
+      width:100%;
+      padding:12px;
+      border:1px solid #d1d1cf;
+      font-size:14px;
+      outline:none;
+      transition:border-color .3s ease;
+      background:#fff;
+    }
+
+    .input-classic:focus{border-color:#000;}
+
+    .btn-black{
+      background:var(--balna-accent);
+      color:#fff;
+      width:100%;
+      padding:16px;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-size:11px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      transition:opacity .3s;
+    }
+    .btn-black:hover{opacity:.9;}
+
+    .btn-outline{
+      background:transparent;
+      color:#000;
+      border:1px solid #000;
+      width:100%;
+      padding:14px;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-size:11px;
+      font-weight:700;
+      cursor:pointer;
+      transition:all .3s;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .btn-outline:hover{background:#f8f8f8;}
+
+    .file-upload-wrapper{
+      border:2px dashed #d1d1cf;
+      padding:30px 20px;
+      text-align:center;
+      cursor:pointer;
+      transition:all .3s;
+      background:#fafafa;
+    }
+    .file-upload-wrapper:hover{
+      background:#f0f0f0;
+      border-color:#000;
+    }
+
+    .market-locker{
+      height:60vh;
+      overflow:hidden;
+      position:relative;
+      cursor:pointer;
+    }
+    .market-locker img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform 1.5s cubic-bezier(.16,1,.3,1);
+    }
+    .market-locker:hover img{transform:scale(1.05);}
+
+    .locker-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 60%);
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:2.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-[100] bg-white border-b border-[#f0f0ed]">
+    <div class="max-w-[1600px] mx-auto px-6 lg:px-16">
+      <div class="flex justify-between items-center h-32">
+
+        <!-- LOGO (fixed path) -->
+        <div class="flex items-center space-x-8 cursor-pointer" onclick="location.reload()">
+          <div class="w-16 h-16 border border-black flex items-center justify-center overflow-hidden bg-white">
+            <img src="assets/logo-marque.jpg" alt="KHOUD-7WAYJI" class="w-full h-full object-cover"
+                 onerror="this.src='https://api.placeholder.com/100/100?text=KH'">
+          </div>
+          <div class="flex flex-col">
+            <span class="serif text-3xl font-bold tracking-tighter uppercase">KHOUD-7WAYJI</span>
+            <span class="text-[8px] tracking-[0.5em] uppercase opacity-50 font-bold">L-STYLE DYALEK</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-6 md:space-x-12">
+          <a href="https://www.instagram.com/khoud_7wayji/" target="_blank"
+             class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest hover:opacity-50">
+            <i class="fa-brands fa-instagram text-lg"></i>
+            <span class="hidden lg:inline">Instagram</span>
+          </a>
+
+          <button onclick="window.scrollTo({top:0, behavior:'smooth'})"
+                  class="text-[11px] font-bold uppercase tracking-widest hover:opacity-50 hidden md:block">
+            Accueil
+          </button>
+
+          <button onclick="openModal('loginModal')"
+                  class="text-[11px] font-bold uppercase tracking-widest hover:opacity-50">
+            Connexion
+          </button>
+
+          <button onclick="openModal('signupChoiceModal')"
+                  class="text-[11px] font-bold uppercase tracking-widest border-2 border-black px-8 py-4 hover:bg-black hover:text-white transition-all">
+            S'inscrire
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="pt-24 pb-16 px-8 text-center">
+    <h1 class="text-6xl md:text-[8rem] font-medium leading-[0.85] tracking-tighter mb-8">
+      No cash?<br><span class="italic font-light">No drama.</span>
+    </h1>
+    <p class="serif text-2xl italic text-gray-400">Khoud l-style, flex l-vibe!</p>
+  </header>
+
+  <!-- LOCKERS -->
+  <section class="max-w-[1400px] mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="market-locker group" onclick="filterGallery('homme')">
+        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=1200" alt="Hommes">
+        <div class="locker-overlay text-white">
+          <h2 class="serif text-5xl italic">Hommes</h2>
+          <p class="text-[9px] uppercase tracking-widest mt-2">Explorer le vestiaire</p>
+        </div>
+      </div>
+
+      <div class="market-locker group" onclick="filterGallery('femme')">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=1200" alt="Femmes">
+        <div class="locker-overlay text-white">
+          <h2 class="serif text-5xl italic">Femmes</h2>
+          <p class="text-[9px] uppercase tracking-widest mt-2">Explorer le vestiaire</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <main id="market-section" class="max-w-[1400px] mx-auto px-6 py-12 border-t border-gray-100 mt-12">
+    <div class="flex justify-between items-end mb-12">
+      <h3 id="galleryTitle" class="serif text-4xl italic">Dernières pépites</h3>
+      <div id="dropCount" class="text-[10px] uppercase tracking-widest font-bold">0 Article</div>
+    </div>
+
+    <div id="galleryContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-8"></div>
+
+    <div class="mt-20 flex flex-col items-center">
+      <button onclick="openModal('depositModal')"
+              class="bg-black text-white px-12 py-5 text-[11px] font-bold uppercase tracking-[0.3em] hover:opacity-80 transition-all cursor-pointer shadow-xl">
+        Déposer un article
+      </button>
+    </div>
+  </main>
+
+  <!-- MODAL CHOIX INSCRIPTION -->
+  <div id="signupChoiceModal" class="modal">
+    <div class="modal-content text-center">
+      <button onclick="closeModal('signupChoiceModal')" class="absolute top-6 right-6 text-2xl hover:opacity-50">&times;</button>
+      <h2 class="serif text-4xl mb-6 italic">Rejoignez-nous</h2>
+      <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-10">Choisissez votre mode d'inscription</p>
+
+      <div class="space-y-4">
+        <button onclick="showAlert('Google (demo)'); closeModal('signupChoiceModal');" class="btn-outline">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google">
+          Continuer avec Google
+        </button>
+
+        <div class="flex items-center py-4">
+          <div class="flex-1 border-t border-gray-100"></div>
+          <span class="px-4 text-[10px] uppercase text-gray-300 font-bold">Ou</span>
+          <div class="flex-1 border-t border-gray-100"></div>
+        </div>
+
+        <button onclick="closeModal('signupChoiceModal'); openModal('signupModal');" class="btn-black">
+          Créer un compte classique
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DEPOT -->
+  <div id="depositModal" class="modal">
+    <div class="modal-content">
+      <button onclick="closeModal('depositModal')" class="absolute top-6 right-6 text-2xl hover:opacity-50">&times;</button>
+      <h2 class="serif text-4xl mb-4 italic">Nouvel article</h2>
+      <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-8">Partagez votre pièce avec nous</p>
+
+      <form id="depositForm" onsubmit="handleDeposit(event)">
+
+        <div class="form-group">
+          <label class="form-label">Photo de l'article *</label>
+          <div class="file-upload-wrapper" onclick="document.getElementById('articlePhoto').click()">
+            <i class="fa fa-plus-circle mb-2 text-2xl opacity-40"></i>
+            <p id="fileNameDisplay" class="text-[10px] uppercase tracking-widest font-bold">Cliquer pour joindre une image</p>
+            <input type="file" id="articlePhoto" accept="image/*" class="hidden" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nom de l'article *</label>
+          <input id="articleName" type="text" required class="input-classic" placeholder="Ex: T-shirt Oversize Noir">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Catégorie *</label>
+          <select id="articleCategory" required class="input-classic">
+            <option value="" disabled selected>Choisir un vestiaire</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label">Taille *</label>
+            <input id="articleSize" type="text" required class="input-classic" placeholder="L / XL / 42">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prix souhaité (MAD) *</label>
+            <input id="articlePrice" type="number" required class="input-classic" placeholder="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description détaillée *</label>
+          <textarea id="articleDesc" required class="input-classic h-24 resize-none" placeholder="État, marque, couleur..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-black">Publier (demo)</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL LOGIN -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <button onclick="closeModal('loginModal')" class="absolute top-6 right-6 text-2xl">&times;</button>
+      <h2 class="serif text-4xl mb-10 italic">Se connecter</h2>
+      <form onsubmit="event.preventDefault(); showAlert('Bienvenue !'); closeModal('loginModal');">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" required class="input-classic">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" required class="input-classic">
+        </div>
+        <button type="submit" class="btn-black">Entrer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL SIGNUP -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <button onclick="closeModal('signupModal')" class="absolute top-6 right-6 text-2xl">&times;</button>
+      <h2 class="serif text-4xl mb-10 italic">S'inscrire</h2>
+      <form onsubmit="event.preventDefault(); showAlert('Compte créé !'); closeModal('signupModal');">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" required class="input-classic">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input type="text" class="input-classic">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input type="text" class="input-classic">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe *</label>
+          <input type="password" required class="input-classic">
+        </div>
+        <button type="submit" class="btn-black">Rejoindre la communauté</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ALERT -->
+  <div id="alertBox" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[15000] opacity-0 transition-all duration-500 pointer-events-none">
+    <div class="bg-black text-white px-8 py-4 shadow-2xl text-[10px] font-bold uppercase tracking-widest">
+      <span id="alertMessage"></span>
+    </div>
+  </div>
+
+  <!-- ✅ CORE JS (works on GitHub even if Firebase fails) -->
+  <script>
+    const demoItems = []; // front-end demo list
+
+    function openModal(id){
+      const m = document.getElementById(id);
+      if(m) m.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id){
+      const m = document.getElementById(id);
+      if(m) m.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function showAlert(msg){
+      const box = document.getElementById('alertBox');
+      const txt = document.getElementById('alertMessage');
+      if(txt) txt.textContent = msg;
+      if(box){
+        box.classList.remove('opacity-0');
+        setTimeout(()=>box.classList.add('opacity-0'), 3000);
+      }
+    }
+
+    function filterGallery(cat){
+      const title = document.getElementById('galleryTitle');
+      if(title) title.textContent = (cat === 'homme') ? "Vestiaire Hommes" : "Vestiaire Femmes";
+      document.getElementById('market-section').scrollIntoView({behavior:'smooth'});
+      renderGallery(cat);
+    }
+
+    // Upload + preview name
+    const photoInput = () => document.getElementById('articlePhoto');
+    document.addEventListener('change', (e)=>{
+      if(e.target && e.target.id === 'articlePhoto' && e.target.files[0]){
+        document.getElementById('fileNameDisplay').textContent = e.target.files[0].name;
+      }
+    });
+
+    function handleDeposit(e){
+      e.preventDefault();
+
+      const f = photoInput().files[0];
+      if(!f){ showAlert("Image requise"); return; }
+
+      const name = document.getElementById('articleName').value.trim();
+      const category = document.getElementById('articleCategory').value;
+      const size = document.getElementById('articleSize').value.trim();
+      const price = document.getElementById('articlePrice').value;
+      const desc = document.getElementById('articleDesc').value.trim();
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        demoItems.unshift({
+          name, category, size, price, desc,
+          imageUrl: reader.result
+        });
+        closeModal('depositModal');
+        showAlert("Article ajouté (demo)");
+        renderGallery(currentFilter);
+      };
+      reader.readAsDataURL(f);
+    }
+
+    let currentFilter = 'all';
+
+    function renderGallery(filter='all'){
+      currentFilter = filter;
+      let items = demoItems.slice();
+      if(filter !== 'all') items = items.filter(x => x.category === filter);
+
+      const container = document.getElementById('galleryContainer');
+      const cnt = document.getElementById('dropCount');
+      if(cnt) cnt.textContent = items.length + " Article(s)";
+
+      if(!container) return;
+
+      container.innerHTML = items.length ? items.map(i => `
+        <div class="group cursor-pointer">
+          <div class="aspect-[3/4] bg-gray-100 mb-4 overflow-hidden relative">
+            <img src="${i.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute bottom-4 right-4 bg-white px-3 py-1 text-[8px] font-bold tracking-widest uppercase">${i.size}</div>
+          </div>
+          <h4 class="serif text-xl font-bold">${i.name}</h4>
+          <p class="text-[10px] font-bold mt-1 tracking-widest text-gray-400">${i.price} MAD</p>
+        </div>
+      `).join('') : '<p class="col-span-full text-center opacity-30 italic py-12">Bientôt de nouvelles pépites...</p>';
+    }
+
+    // close modal on outside click
+    window.addEventListener('click', (e)=>{
+      if(e.target.classList && e.target.classList.contains('modal')){
+        closeModal(e.target.id);
+      }
+    });
+
+    // initial
+    renderGallery('all');
+  </script>
+
+</body>
+</html>
