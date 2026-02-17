@@ -9,10 +9,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-    :root {
-      --kh-bg: #fdfdfb;
-      --kh-accent: #0d0d0d;
-    }
+    :root { --kh-bg: #fdfdfb; --kh-accent: #0d0d0d; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -21,10 +18,8 @@
       margin: 0;
       scroll-behavior: smooth;
     }
-
     h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
 
-    /* Modals */
     .modal {
       display: none;
       position: fixed;
@@ -36,7 +31,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .modal-content {
       background: #fff;
       width: 100%;
@@ -46,8 +40,6 @@
       border: 1px solid #eee;
       box-shadow: 0 20px 40px rgba(0,0,0,0.05);
     }
-
-    /* Form Elements */
     .input-classic {
       width: 100%;
       padding: 14px;
@@ -56,8 +48,6 @@
       outline: none;
       margin-bottom: 15px;
     }
-    .input-classic:focus { border-color: #000; }
-
     .btn-black {
       background: #000;
       color: #fff;
@@ -71,7 +61,6 @@
       border: none;
     }
 
-    /* Cards */
     .market-locker {
       height: 70vh;
       overflow: hidden;
@@ -96,38 +85,6 @@
       padding: 2.5rem;
     }
 
-    /* Cart & Controls */
-    #cartIcon {
-      cursor: pointer;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 11000;
-      background: white;
-      border: 1px solid black;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #cartBadge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: black;
-      color: white;
-      width: 20px;
-      height: 20px;
-      font-size: 10px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     #loader {
       position: fixed;
       inset: 0;
@@ -150,6 +107,22 @@
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    #cartIcon {
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 11000;
+      background: white;
+      border: 1px solid black;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .pill-btn {
       font-size: 9px;
       font-weight: 800;
@@ -164,7 +137,7 @@
 </head>
 <body>
 
-  <!-- Écran de chargement -->
+  <!-- Écran de Chargement -->
   <div id="loader">
     <div class="spinner"></div>
     <p class="mt-4 serif italic text-xl">Khoud-7wayji</p>
@@ -183,17 +156,17 @@
       <div class="flex items-center space-x-8">
         <a href="#about" class="hidden md:block text-[10px] uppercase font-bold tracking-widest opacity-40 hover:opacity-100">À Propos</a>
         <a href="#market-section" class="hidden md:block text-[10px] uppercase font-bold tracking-widest opacity-40 hover:opacity-100">Vestiaire</a>
-        <button onclick="openModal('adminLoginModal')" class="text-xs opacity-40 hover:opacity-100 transition">
-            <i class="fa-solid fa-lock"></i>
+        <button type="button" onclick="window.openModal('adminLoginModal')" class="text-xs opacity-40 hover:opacity-100 transition p-2 cursor-pointer">
+          <i class="fa-solid fa-lock"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- ICON PANIER -->
-  <div id="cartIcon" style="display:none" onclick="openModal('cartModal')">
+  <!-- PANIER ICON -->
+  <div id="cartIcon" style="display:none" onclick="window.openModal('cartModal')">
     <i class="fa-solid fa-shopping-bag"></i>
-    <div id="cartBadge">0</div>
+    <div id="cartBadge" class="absolute -top-1 -right-1 bg-black text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center">0</div>
   </div>
 
   <!-- HERO -->
@@ -203,20 +176,20 @@
     </h1>
     <p class="serif italic text-2xl md:text-3xl opacity-60 tracking-tight mb-8">Khoud l-style, flex l-vibe!</p>
     <div class="flex justify-center mt-8">
-        <a href="#market-section" class="text-[10px] uppercase font-black tracking-[0.5em] border-b-2 border-black pb-2 hover:opacity-40 transition">Accéder au shop</a>
+      <a href="#market-section" class="text-[10px] uppercase font-black tracking-[0.5em] border-b-2 border-black pb-2 hover:opacity-40 transition">Accéder au shop</a>
     </div>
   </header>
 
-  <!-- CATÉGORIES -->
+  <!-- CATEGORIES -->
   <section class="max-w-[1400px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="market-locker" onclick="filterGallery('homme')">
+    <div class="market-locker" onclick="window.filterGallery('homme')">
       <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1200&auto=format&fit=crop" alt="Homme">
       <div class="locker-overlay text-white">
         <h2 class="serif text-6xl italic mb-2">Hommes</h2>
         <p class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-80">Collection Streetwear & Vintage</p>
       </div>
     </div>
-    <div class="market-locker" onclick="filterGallery('femme')">
+    <div class="market-locker" onclick="window.filterGallery('femme')">
       <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=1200&auto=format&fit=crop" alt="Femme">
       <div class="locker-overlay text-white">
         <h2 class="serif text-6xl italic mb-2">Femmes</h2>
@@ -225,53 +198,51 @@
     </div>
   </section>
 
-  <!-- À PROPOS -->
+  <!-- ABOUT -->
   <section id="about" class="max-w-[1100px] mx-auto px-6 py-32 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
     <div class="bg-gray-100 p-4">
-        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" class="w-full grayscale brightness-90">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" class="w-full grayscale brightness-90" alt="Boutique Seconde Main">
     </div>
     <div class="space-y-8">
       <h2 class="serif text-6xl italic">Notre Vision</h2>
       <div class="text-gray-600 space-y-4 leading-relaxed text-lg">
         <p><strong>Khoud-7wayji</strong> est une plateforme marocaine dédiée à la seconde main et à la réutilisation de vêtements.</p>
-        <p>Nous permettons à chacun de vendre ou acheter des articles de mode tout en donnant une seconde vie aux pièces déjà aimées.</p>
-        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter sur Instagram @khoud_7wayji.</p>
+        <p>Nous permettons à chacun de vendre ou acheter des articles de mode tout en donnant une seconde vie aux pièces déjà aimées. Notre objectif est de rendre la mode plus accessible, plus responsable et plus durable.</p>
+        <p>Chez Khoud-7wayji, nous croyons qu’un vêtement ne se jette pas… il se partage. Rejoignez notre communauté et renouvelez votre style autrement.</p>
+        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter pour toute question ou collaboration.</p>
       </div>
     </div>
   </section>
 
-  <!-- BOUTIQUE -->
+  <!-- MARKETPLACE -->
   <main id="market-section" class="max-w-[1400px] mx-auto px-6 py-20 border-t border-gray-100">
     <div class="flex flex-col md:flex-row justify-between items-end mb-12">
       <h3 id="galleryTitle" class="serif text-5xl italic">Le Vestiaire</h3>
-      <span id="itemCount" class="text-[10px] uppercase font-bold tracking-widest opacity-30 mb-2">Chargement...</span>
+      <span id="itemCount" class="text-[10px] uppercase font-bold tracking-widest opacity-30 mb-2">0 PIÈCES</span>
     </div>
     <div id="galleryContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12"></div>
   </main>
 
-  <!-- PANNEAU ADMIN -->
+  <!-- ADMIN PANEL -->
   <section id="adminPanel" style="display:none;" class="py-24 bg-neutral-100 border-y border-neutral-200">
     <div class="max-w-[500px] mx-auto px-6">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="serif text-4xl italic">Gestion Stock</h2>
-            <button onclick="logoutAdmin()" class="text-[9px] uppercase font-bold tracking-widest border border-black px-4 py-2">Déconnexion</button>
+      <div class="flex justify-between items-center mb-10">
+        <h2 class="serif text-4xl italic">Gestion Stock</h2>
+        <button onclick="window.logoutAdmin()" class="text-[9px] uppercase font-bold tracking-widest border border-black px-4 py-2">Déconnexion</button>
+      </div>
+      <form id="adminAddForm" class="bg-white p-8 border border-black">
+        <input type="file" id="adminImage" accept="image/*" class="w-full text-xs mb-4">
+        <input id="adminName" placeholder="Nom de l'article" required class="input-classic">
+        <div class="grid grid-cols-2 gap-4">
+          <select id="adminCategory" class="input-classic">
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+          </select>
+          <input id="adminSize" placeholder="Taille" required class="input-classic">
         </div>
-        <form id="adminAddForm" class="bg-white p-8 border border-black">
-            <div class="mb-6">
-                <label class="block text-[10px] uppercase font-bold tracking-widest mb-2">Photo de l'article</label>
-                <input type="file" id="adminImage" accept="image/*" class="w-full text-xs">
-            </div>
-            <input id="adminName" placeholder="Nom du vêtement" required class="input-classic">
-            <div class="grid grid-cols-2 gap-4">
-                <select id="adminCategory" class="input-classic">
-                    <option value="homme">Homme</option>
-                    <option value="femme">Femme</option>
-                </select>
-                <input id="adminSize" placeholder="Taille (ex: M)" required class="input-classic">
-            </div>
-            <input id="adminPrice" type="number" placeholder="Prix (MAD)" required class="input-classic">
-            <button type="submit" id="addBtn" class="btn-black">Ajouter au catalogue</button>
-        </form>
+        <input id="adminPrice" type="number" placeholder="Prix (MAD)" required class="input-classic">
+        <button type="submit" id="addBtn" class="btn-black">Ajouter au catalogue</button>
+      </form>
     </div>
   </section>
 
@@ -288,32 +259,61 @@
           <span class="text-xs font-bold uppercase tracking-widest">Suivre l'aventure</span>
         </a>
       </div>
-      <div class="text-right py-10">
-        <button onclick="openModal('adminLoginModal')" class="text-[10px] uppercase font-bold tracking-widest opacity-20 hover:opacity-100">Admin</button>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-20 py-20">
+        <div>
+          <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] mb-8 opacity-30">Contact</h4>
+          <p class="text-sm opacity-60">WhatsApp: +212 7 73 51 57 53</p>
+          <p class="text-sm opacity-60 mt-2">Email: khoud7wayji@gmail.com</p>
+        </div>
+        <div>
+          <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] mb-8 opacity-30">Menu</h4>
+          <div class="flex flex-col space-y-3 text-xs uppercase font-bold tracking-widest opacity-60">
+            <a href="#" class="hover:opacity-100">Accueil</a>
+            <a href="#about" class="hover:opacity-100">À Propos</a>
+            <a href="#market-section" class="hover:opacity-100">Boutique</a>
+          </div>
+        </div>
+        <div class="md:text-right">
+          <button onclick="window.openModal('adminLoginModal')" class="text-[10px] uppercase font-bold tracking-widest opacity-20 hover:opacity-100">Espace Admin</button>
+          <p class="text-[9px] uppercase tracking-widest opacity-20 mt-12">© 2024 KHOUD-7WAYJI · MAROC</p>
+        </div>
       </div>
     </div>
   </footer>
 
   <!-- MODALS -->
+  <div id="adminLoginModal" class="modal">
+    <div class="modal-content text-center">
+      <button onclick="window.closeModal('adminLoginModal')" class="absolute top-6 right-6 text-xl cursor-pointer">&times;</button>
+      <h2 class="serif text-4xl mb-8 italic">Accès Admin</h2>
+      <form id="adminLoginForm">
+        <input type="email" id="adminEmail" placeholder="Email" required class="input-classic">
+        <input type="password" id="adminPass" placeholder="Mot de passe" required class="input-classic">
+        <button type="submit" class="btn-black">Se connecter</button>
+      </form>
+    </div>
+  </div>
+
   <div id="cartModal" class="modal">
     <div class="modal-content">
-      <button onclick="closeModal('cartModal')" class="absolute top-6 right-6 text-xl">&times;</button>
+      <button onclick="window.closeModal('cartModal')" class="absolute top-6 right-6 text-xl cursor-pointer">&times;</button>
       <h2 class="serif text-4xl mb-8 italic">Mon Panier</h2>
-      <div id="cartItemsList" class="max-h-[50vh] overflow-y-auto mb-8"></div>
+      <div id="cartItemsList" class="max-h-[50vh] overflow-y-auto"></div>
       <div id="cartEmpty" class="text-center py-10 opacity-30 italic">Votre panier est vide.</div>
       <div id="cartSummary" style="display:none">
         <div class="flex justify-between border-t border-black pt-4 mb-8">
-            <span class="font-bold uppercase text-[10px] tracking-widest">Total</span>
-            <span id="cartTotal" class="font-bold">0 MAD</span>
+          <span class="font-bold uppercase text-[10px] tracking-widest">Total</span>
+          <span id="cartTotal" class="font-bold">0 MAD</span>
         </div>
-        <button onclick="closeModal('cartModal'); openModal('checkoutModal')" class="btn-black">Commander</button>
+        <button onclick="window.closeModal('cartModal'); window.openModal('checkoutModal')" class="btn-black">Commander</button>
       </div>
     </div>
   </div>
 
   <div id="checkoutModal" class="modal">
     <div class="modal-content">
-      <button onclick="closeModal('checkoutModal')" class="absolute top-6 right-6 text-xl">&times;</button>
+      <button onclick="window.closeModal('checkoutModal')" class="absolute top-6 right-6 text-xl cursor-pointer">&times;</button>
       <h2 class="serif text-4xl mb-6 italic">Livraison</h2>
       <form id="checkoutForm">
         <input id="custName" placeholder="Nom Complet" required class="input-classic">
@@ -324,18 +324,7 @@
     </div>
   </div>
 
-  <div id="adminLoginModal" class="modal">
-    <div class="modal-content text-center">
-      <button onclick="closeModal('adminLoginModal')" class="absolute top-6 right-6 text-xl">&times;</button>
-      <h2 class="serif text-4xl mb-8 italic">Accès Admin</h2>
-      <form id="adminLoginForm">
-        <input type="email" id="adminEmail" placeholder="Email Admin" required class="input-classic">
-        <input type="password" id="adminPass" placeholder="Mot de passe" required class="input-classic">
-        <button type="submit" class="btn-black">Se connecter</button>
-      </form>
-    </div>
-  </div>
-
+  <!-- ALERT -->
   <div id="alert" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[20000] opacity-0 transition-opacity duration-500 pointer-events-none">
     <div class="bg-black text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest shadow-2xl">
       <span id="alertMsg"></span>
@@ -343,210 +332,284 @@
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, doc, addDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // =========================
+    // Loader anti-blocage
+    // =========================
+    function hideLoader() {
+      const loader = document.getElementById('loader');
+      if (!loader) return;
+      loader.style.opacity = '0';
+      setTimeout(() => (loader.style.display = 'none'), 500);
+    }
+    window.addEventListener('load', () => setTimeout(hideLoader, 400));
 
-    // --- CONFIGURATION FIREBASE ---
-    // Si tu es sur GitHub Pages, tu dois remplacer l'objet ci-dessous par tes propres clés Firebase
-    // Récupère-les sur console.firebase.google.com
-    let firebaseConfig;
-    try {
-        firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-    } catch(e) {
-        firebaseConfig = {};
+    // =========================
+    // UI globals
+    // =========================
+    function notify(msg) {
+      const el = document.getElementById('alert');
+      const msgEl = document.getElementById('alertMsg');
+      if (!el || !msgEl) return;
+      msgEl.innerText = msg;
+      el.style.opacity = '1';
+      setTimeout(() => (el.style.opacity = '0'), 3000);
+    }
+    window.notify = notify;
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'flex';
+      if (id === 'cartModal') renderCartItems();
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'none';
+    }
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+
+    window.onclick = (e) => {
+      if (e.target?.classList?.contains('modal')) closeModal(e.target.id);
+    };
+
+    // =========================
+    // Data + Cart
+    // =========================
+    let articles = [];
+    let cart = [];
+    let isAdmin = false;
+    let currentFilter = 'all';
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cartBadge');
+      const icon = document.getElementById('cartIcon');
+      if (!badge || !icon) return;
+      badge.innerText = String(cart.length);
+      icon.style.display = cart.length > 0 && !isAdmin ? 'flex' : 'none';
     }
 
-    // Sécurité Loader : S'il n'y a pas de config (cas GitHub sans config injectée), on enlève le loader après 2s
-    setTimeout(() => {
-        const loader = document.getElementById('loader');
-        if (loader && loader.style.display !== 'none') {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 500);
-            console.warn("Firebase non configuré : Affichage en mode démo.");
-        }
-    }, 2500);
+    function renderCartItems() {
+      const list = document.getElementById('cartItemsList');
+      const summary = document.getElementById('cartSummary');
+      const empty = document.getElementById('cartEmpty');
+      if (!list || !summary || !empty) return;
 
-    // Initialisation uniquement si la config existe
-    if (firebaseConfig.apiKey) {
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'khoud-7wayji-external';
+      if (cart.length === 0) {
+        list.innerHTML = "";
+        summary.style.display = "none";
+        empty.style.display = "block";
+        return;
+      }
 
-        let articles = [];
-        let cart = [];
-        let isAdmin = false;
-        let currentFilter = 'all';
+      empty.style.display = "none";
+      summary.style.display = "block";
 
-        const ADMIN_CREDS = { email: 'admin@khoud.ma', pass: 'admin123' };
-        const WA_NUMBER = "212773515753";
+      list.innerHTML = cart.map(item => `
+        <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-100">
+          <img src="${item.imageUrl}" class="w-16 h-20 object-cover">
+          <div class="flex-1">
+            <p class="serif font-bold">${item.name}</p>
+            <p class="text-[10px] opacity-40 uppercase font-bold tracking-widest">${item.size} · ${item.price} MAD</p>
+          </div>
+          <button onclick="window.removeFromCart('${item.id}')" class="text-xl">&times;</button>
+        </div>
+      `).join('');
 
-        const setupAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
+      const total = cart.reduce((acc, i) => acc + Number(i.price || 0), 0);
+      document.getElementById('cartTotal').innerText = `${total} MAD`;
+    }
+    window.renderCartItems = renderCartItems;
+
+    window.addToCart = (id) => {
+      const item = articles.find(a => a.id === id);
+      if (!item) return notify("Article introuvable");
+      if (cart.find(c => c.id === id)) return notify("Déjà dans le panier");
+      cart.push(item);
+      updateCartBadge();
+      notify("Article ajouté !");
+    };
+
+    window.removeFromCart = (id) => {
+      cart = cart.filter(c => c.id !== id);
+      updateCartBadge();
+      renderCartItems();
+    };
+
+    // =========================
+    // Gallery
+    // =========================
+    function renderGallery(filter) {
+      const container = document.getElementById('galleryContainer');
+      const countEl = document.getElementById('itemCount');
+      if (!container || !countEl) return;
+
+      const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
+      countEl.innerText = `${items.length} PIÈCES`;
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Nouvel arrivage bientôt...</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="group">
+          <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
+            <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size}</div>
+            ${isAdmin
+              ? `<button onclick="window.deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>`
+              : `<button onclick="window.addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
             }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-                listenToStore(db, appId);
-            }
-        });
-
-        setupAuth();
-
-        function listenToStore(db, appId) {
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), (snap) => {
-                articles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                articles.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-                renderGallery(currentFilter);
-            });
-        }
-
-        // Fonctions Globales
-        window.filterGallery = (cat) => {
-            currentFilter = cat;
-            document.getElementById('galleryTitle').innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
-            document.getElementById('market-section').scrollIntoView({ behavior: 'smooth' });
-            renderGallery(cat);
-        };
-
-        function renderGallery(filter) {
-            const container = document.getElementById('galleryContainer');
-            const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
-            document.getElementById('itemCount').innerText = `${items.length} PIÈCES`;
-
-            if (items.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Arrivage en cours...</div>`;
-                return;
-            }
-
-            container.innerHTML = items.map(item => `
-                <div class="group">
-                    <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
-                        <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size}</div>
-                        ${isAdmin ? 
-                            `<button onclick="deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>` :
-                            `<button onclick="addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
-                        }
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <h4 class="serif text-xl font-bold">${item.name}</h4>
-                        <span class="text-[10px] font-bold opacity-40">${item.price} MAD</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        window.addToCart = (id) => {
-            const item = articles.find(a => a.id === id);
-            if (cart.find(c => c.id === id)) return notify("Déjà ajouté");
-            cart.push(item);
-            updateCartBadge();
-            notify("Ajouté au panier !");
-        };
-
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
-            const icon = document.getElementById('cartIcon');
-            badge.innerText = cart.length;
-            icon.style.display = cart.length > 0 && !isAdmin ? 'flex' : 'none';
-        }
-
-        window.renderCartItems = () => {
-            const list = document.getElementById('cartItemsList');
-            const summary = document.getElementById('cartSummary');
-            const empty = document.getElementById('cartEmpty');
-            if (cart.length === 0) {
-                list.innerHTML = ""; summary.style.display = "none"; empty.style.display = "block";
-                return;
-            }
-            empty.style.display = "none"; summary.style.display = "block";
-            list.innerHTML = cart.map(item => `
-                <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-100">
-                    <img src="${item.imageUrl}" class="w-16 h-20 object-cover">
-                    <div class="flex-1">
-                        <p class="serif font-bold">${item.name}</p>
-                        <p class="text-[10px] opacity-40 uppercase font-bold tracking-widest">${item.size} · ${item.price} MAD</p>
-                    </div>
-                    <button onclick="removeFromCart('${item.id}')" class="text-xl">&times;</button>
-                </div>
-            `).join('');
-            const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
-            document.getElementById('cartTotal').innerText = `${total} MAD`;
-        };
-
-        window.removeFromCart = (id) => {
-            cart = cart.filter(c => c.id !== id);
-            updateCartBadge();
-            renderCartItems();
-        };
-
-        document.getElementById('checkoutForm').onsubmit = (e) => {
-            e.preventDefault();
-            const total = cart.reduce((acc, i) => acc + parseInt(i.price), 0);
-            let msg = `*KHOUD-7WAYJI*%0A*Client:* ${document.getElementById('custName').value}%0A*Ville:* ${document.getElementById('custCity').value}%0A%0A*Articles:*%0A`;
-            cart.forEach(i => msg += `- ${i.name} (${i.size}) : ${i.price} MAD%0A`);
-            msg += `%0A*TOTAL: ${total} MAD*`;
-            window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-        };
-
-        document.getElementById('adminLoginForm').onsubmit = (e) => {
-            e.preventDefault();
-            if (document.getElementById('adminEmail').value === ADMIN_CREDS.email && document.getElementById('adminPass').value === ADMIN_CREDS.pass) {
-                isAdmin = true;
-                closeModal('adminLoginModal');
-                document.getElementById('adminPanel').style.display = 'block';
-                renderGallery(currentFilter);
-            }
-        };
-
-        window.logoutAdmin = () => { isAdmin = false; document.getElementById('adminPanel').style.display = 'none'; renderGallery(currentFilter); };
-
-        document.getElementById('adminAddForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const file = document.getElementById('adminImage').files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = async () => {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), {
-                    name: document.getElementById('adminName').value,
-                    category: document.getElementById('adminCategory').value,
-                    size: document.getElementById('adminSize').value,
-                    price: document.getElementById('adminPrice').value,
-                    imageUrl: reader.result,
-                    createdAt: new Date().toISOString()
-                });
-                document.getElementById('adminAddForm').reset();
-            };
-        };
-
-        window.deleteItem = async (id) => {
-            if (confirm("Supprimer ?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'articles', id));
-        };
+          </div>
+          <div class="flex justify-between items-center">
+            <h4 class="serif text-xl font-bold">${item.name}</h4>
+            <span class="text-[10px] font-bold opacity-40">${item.price} MAD</span>
+          </div>
+        </div>
+      `).join('');
     }
 
-    // Modal helpers
-    window.openModal = (id) => {
-        document.getElementById(id).style.display = 'flex';
-        if(id === 'cartModal' && window.renderCartItems) renderCartItems();
+    window.filterGallery = (cat) => {
+      currentFilter = cat;
+      const title = document.getElementById('galleryTitle');
+      if (title) {
+        title.innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
+      }
+      renderGallery(cat);
+      document.getElementById('market-section')?.scrollIntoView({ behavior: 'smooth' });
     };
-    window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
-    window.notify = (msg) => {
-        const el = document.getElementById('alert');
-        document.getElementById('alertMsg').innerText = msg;
-        el.style.opacity = '1';
-        setTimeout(() => el.style.opacity = '0', 3000);
+
+    // =========================
+    // LocalStorage (GitHub)
+    // =========================
+    const LS_KEY = "khoud_articles_v1";
+
+    function loadFromLocal() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        articles = raw ? JSON.parse(raw) : [];
+      } catch {
+        articles = [];
+      }
+      articles.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      renderGallery(currentFilter);
+      hideLoader();
+    }
+
+    function saveToLocal() {
+      localStorage.setItem(LS_KEY, JSON.stringify(articles));
+    }
+
+    // =========================
+    // Checkout WhatsApp (FIX ✅)
+    // =========================
+    document.getElementById('checkoutForm').onsubmit = (e) => {
+      e.preventDefault();
+
+      const phone = "212773515753"; // ✅ 0773515753 en international
+      const name = document.getElementById('custName').value.trim();
+      const city = document.getElementById('custCity').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+
+      const total = cart.reduce((acc, i) => acc + Number(i.price || 0), 0);
+
+      let message =
+`COMMANDE KHOUD-7WAYJI
+
+Client: ${name}
+Ville: ${city}
+Adresse: ${address}
+
+Articles:
+${cart.map(i => `- ${i.name} (${i.size}) : ${i.price} MAD`).join('\n')}
+
+TOTAL: ${total} MAD`;
+
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+      // ✅ plus fiable sur GitHub Pages
+      window.location.href = url;
+
+      cart = [];
+      updateCartBadge();
+      window.closeModal('checkoutModal');
+      window.notify("Commande envoyée vers WhatsApp");
     };
-    window.onclick = (e) => { if(e.target.classList.contains('modal')) closeModal(e.target.id); };
+
+    // =========================
+    // Admin
+    // =========================
+    document.getElementById('adminLoginForm').onsubmit = (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value;
+      const pass = document.getElementById('adminPass').value;
+
+      if (email === 'admin@khoud.ma' && pass === 'admin123') {
+        isAdmin = true;
+        closeModal('adminLoginModal');
+        document.getElementById('adminPanel').style.display = 'block';
+        renderGallery(currentFilter);
+        updateCartBadge();
+        notify("Bonjour Admin");
+      } else {
+        notify("Identifiants incorrects");
+      }
+    };
+
+    window.logoutAdmin = () => {
+      isAdmin = false;
+      document.getElementById('adminPanel').style.display = 'none';
+      renderGallery(currentFilter);
+      updateCartBadge();
+      notify("Déconnecté");
+    };
+
+    // Delete local
+    window.deleteItem = (id) => {
+      if (!confirm("Supprimer l'article ?")) return;
+      articles = articles.filter(a => a.id !== id);
+      saveToLocal();
+      renderGallery(currentFilter);
+      notify("Article supprimé");
+    };
+
+    // Add local
+    document.getElementById('adminAddForm').onsubmit = (e) => {
+      e.preventDefault();
+
+      const file = document.getElementById('adminImage').files[0];
+      if (!file) return notify("Photo requise");
+
+      const btn = document.getElementById('addBtn');
+      btn.disabled = true; btn.innerText = "Ajout...";
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const item = {
+          id: "ls_" + Math.random().toString(16).slice(2),
+          name: document.getElementById('adminName').value,
+          category: document.getElementById('adminCategory').value,
+          size: document.getElementById('adminSize').value,
+          price: document.getElementById('adminPrice').value,
+          imageUrl: reader.result,
+          createdAt: new Date().toISOString()
+        };
+
+        articles.unshift(item);
+        saveToLocal();
+        renderGallery(currentFilter);
+
+        document.getElementById('adminAddForm').reset();
+        btn.disabled = false; btn.innerText = "Ajouter au catalogue";
+        notify("Article ajouté !");
+      };
+    };
+
+    // Start
+    loadFromLocal();
   </script>
 </body>
 </html>
