@@ -148,7 +148,7 @@
     <div class="max-w-[1600px] mx-auto px-6 h-20 md:h-24 flex justify-between items-center">
       <div class="flex items-center space-x-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
 
-        <!-- ✅ LOGO (chemin demandé) - on garde le même cadre que "KH" -->
+        <!-- ✅ LOGO -->
         <div class="w-10 h-10 border-2 border-black flex items-center justify-center">
           <img src="assets/logo de la marque .jpg" alt="Logo Khoud-7wayji" class="w-8 h-8 object-contain" />
         </div>
@@ -158,10 +158,11 @@
           <span class="text-[7px] tracking-[0.4em] uppercase opacity-40 font-bold">L-STYLE DYALEK</span>
         </div>
       </div>
+
       <div class="flex items-center space-x-8">
         <a href="#about" class="hidden md:block text-[10px] uppercase font-bold tracking-widest opacity-40 hover:opacity-100">À Propos</a>
         <a href="#market-section" class="hidden md:block text-[10px] uppercase font-bold tracking-widest opacity-40 hover:opacity-100">Vestiaire</a>
-        <button type="button" onclick="window.openModal('adminLoginModal')" class="text-xs opacity-40 hover:opacity-100 transition p-2 cursor-pointer">
+        <button type="button" onclick="window.openModal('adminLoginModal')" class="text-xs opacity-40 hover:opacity-100 transition p-2 cursor-pointer" title="Espace admin">
           <i class="fa-solid fa-lock"></i>
         </button>
       </div>
@@ -292,11 +293,17 @@
     <div class="modal-content text-center">
       <button onclick="window.closeModal('adminLoginModal')" class="absolute top-6 right-6 text-xl cursor-pointer">&times;</button>
       <h2 class="serif text-4xl mb-8 italic">Accès Admin</h2>
+
+      <!-- Interface conservée (email + pass) -->
       <form id="adminLoginForm">
         <input type="email" id="adminEmail" placeholder="Email" required class="input-classic">
         <input type="password" id="adminPass" placeholder="Mot de passe" required class="input-classic">
         <button type="submit" class="btn-black">Se connecter</button>
       </form>
+
+      <p class="mt-4 text-[10px] opacity-40">
+        (Astuce: la connexion se fait via Google, seul <b>bokottikhadija@gmail.com</b> devient Admin)
+      </p>
     </div>
   </div>
 
@@ -337,55 +344,202 @@
   </div>
 
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInAnonymously,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      onSnapshot,
+      query,
+      orderBy,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
     // =========================
-    // Loader anti-blocage
+    // Firebase Config (TON CONFIG ✅)
     // =========================
-    function hideLoader() {
+    const firebaseConfig = {
+      apiKey: "AIzaSyB7D9RKxptuYCPIZ8IQvLpjvMVoJzecoAc",
+      authDomain: "khoud-7wayji.firebaseapp.com",
+      projectId: "khoud-7wayji",
+      storageBucket: "khoud-7wayji.firebasestorage.app",
+      messagingSenderId: "29364177851",
+      appId: "1:29364177851:web:20c1bd8a5e35cee042d29e",
+      measurementId: "G-GWHMHM5109"
+    };
+
+    const ADMIN_EMAIL_ALLOWED = "bokottikhadija@gmail.com"; // ✅ seul admin
+
+    // =========================
+    // Loader
+    // =========================
+    const hideLoader = () => {
       const loader = document.getElementById('loader');
       if (!loader) return;
       loader.style.opacity = '0';
       setTimeout(() => (loader.style.display = 'none'), 500);
-    }
-    window.addEventListener('load', () => setTimeout(hideLoader, 400));
+    };
+    window.addEventListener('load', () => setTimeout(hideLoader, 500));
 
     // =========================
-    // UI globals
+    // UI
     // =========================
-    function notify(msg) {
+    window.notify = (msg) => {
       const el = document.getElementById('alert');
       const msgEl = document.getElementById('alertMsg');
       if (!el || !msgEl) return;
       msgEl.innerText = msg;
       el.style.opacity = '1';
       setTimeout(() => (el.style.opacity = '0'), 3000);
-    }
-    window.notify = notify;
+    };
 
-    function openModal(id) {
+    window.openModal = (id) => {
       const modal = document.getElementById(id);
       if (!modal) return;
       modal.style.display = 'flex';
-      if (id === 'cartModal') renderCartItems();
-    }
-    function closeModal(id) {
+      if (id === 'cartModal') window.renderCartItems();
+    };
+
+    window.closeModal = (id) => {
       const modal = document.getElementById(id);
       if (!modal) return;
       modal.style.display = 'none';
-    }
-    window.openModal = openModal;
-    window.closeModal = closeModal;
+    };
 
     window.onclick = (e) => {
-      if (e.target?.classList?.contains('modal')) closeModal(e.target.id);
+      if (e.target?.classList?.contains('modal')) window.closeModal(e.target.id);
     };
 
     // =========================
-    // Data + Cart
+    // Firebase init
+    // =========================
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // =========================
+    // State
     // =========================
     let articles = [];
     let cart = [];
     let isAdmin = false;
     let currentFilter = 'all';
+    let unsubscribeArticles = null;
+
+    // =========================
+    // Articles listener (visible to everyone)
+    // =========================
+    const startArticlesListener = () => {
+      try {
+        if (unsubscribeArticles) unsubscribeArticles();
+
+        const col = collection(db, "articles");
+        const q = query(col, orderBy("createdAt", "desc"));
+
+        unsubscribeArticles = onSnapshot(q, (snap) => {
+          articles = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          renderGallery(currentFilter);
+        }, (err) => {
+          console.warn("Firestore error:", err);
+          window.notify("Erreur de chargement du vestiaire (Firestore).");
+          renderGallery(currentFilter);
+        });
+      } catch (e) {
+        console.warn(e);
+        renderGallery(currentFilter);
+      }
+    };
+
+    // =========================
+    // Auth: clients = anonymous
+    // =========================
+    const ensureAnonymous = async () => {
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      hideLoader();
+      if (!user) return;
+
+      isAdmin = !!user.email && user.email.toLowerCase() === ADMIN_EMAIL_ALLOWED.toLowerCase();
+
+      document.getElementById('adminPanel').style.display = isAdmin ? 'block' : 'none';
+      updateCartBadge();
+      renderGallery(currentFilter);
+
+      startArticlesListener();
+    });
+
+    ensureAnonymous().catch(() => hideLoader());
+
+    // =========================
+    // Gallery + filters
+    // =========================
+    window.filterGallery = (cat) => {
+      currentFilter = cat;
+      const title = document.getElementById('galleryTitle');
+      if (title) {
+        title.innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
+      }
+      renderGallery(cat);
+      document.getElementById('market-section')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    function renderGallery(filter) {
+      const container = document.getElementById('galleryContainer');
+      const countEl = document.getElementById('itemCount');
+      if (!container || !countEl) return;
+
+      const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
+      countEl.innerText = `${items.length} PIÈCES`;
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Nouvel arrivage bientôt...</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="group">
+          <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
+            <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size || ''}</div>
+            ${isAdmin ?
+              `<button onclick="window.deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>` :
+              `<button onclick="window.addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
+            }
+          </div>
+          <div class="flex justify-between items-center">
+            <h4 class="serif text-xl font-bold">${item.name || ''}</h4>
+            <span class="text-[10px] font-bold opacity-40">${item.price || 0} MAD</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // =========================
+    // Cart logic
+    // =========================
+    window.addToCart = (id) => {
+      const item = articles.find(a => a.id === id);
+      if (!item) return window.notify("Article introuvable");
+      if (cart.find(c => c.id === id)) return window.notify("Déjà dans le panier");
+      cart.push(item);
+      updateCartBadge();
+      window.notify("Article ajouté !");
+    };
 
     function updateCartBadge() {
       const badge = document.getElementById('cartBadge');
@@ -395,7 +549,7 @@
       icon.style.display = cart.length > 0 && !isAdmin ? 'flex' : 'none';
     }
 
-    function renderCartItems() {
+    window.renderCartItems = () => {
       const list = document.getElementById('cartItemsList');
       const summary = document.getElementById('cartSummary');
       const empty = document.getElementById('cartEmpty');
@@ -424,96 +578,21 @@
 
       const total = cart.reduce((acc, i) => acc + Number(i.price || 0), 0);
       document.getElementById('cartTotal').innerText = `${total} MAD`;
-    }
-    window.renderCartItems = renderCartItems;
-
-    window.addToCart = (id) => {
-      const item = articles.find(a => a.id === id);
-      if (!item) return notify("Article introuvable");
-      if (cart.find(c => c.id === id)) return notify("Déjà dans le panier");
-      cart.push(item);
-      updateCartBadge();
-      notify("Article ajouté !");
     };
 
     window.removeFromCart = (id) => {
       cart = cart.filter(c => c.id !== id);
       updateCartBadge();
-      renderCartItems();
+      window.renderCartItems();
     };
 
     // =========================
-    // Gallery
-    // =========================
-    function renderGallery(filter) {
-      const container = document.getElementById('galleryContainer');
-      const countEl = document.getElementById('itemCount');
-      if (!container || !countEl) return;
-
-      const items = filter === 'all' ? articles : articles.filter(a => a.category === filter);
-      countEl.innerText = `${items.length} PIÈCES`;
-
-      if (items.length === 0) {
-        container.innerHTML = `<div class="col-span-full py-20 text-center italic opacity-30">Nouvel arrivage bientôt...</div>`;
-        return;
-      }
-
-      container.innerHTML = items.map(item => `
-        <div class="group">
-          <div class="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
-            <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-            <div class="absolute bottom-4 left-4 bg-white px-2 py-1 text-[8px] font-bold tracking-widest border border-black">${item.size}</div>
-            ${isAdmin
-              ? `<button onclick="window.deleteItem('${item.id}')" class="absolute top-4 right-4 bg-red-600 text-white text-[8px] font-bold px-3 py-1">Supprimer</button>`
-              : `<button onclick="window.addToCart('${item.id}')" class="absolute top-4 right-4 pill-btn opacity-0 group-hover:opacity-100 transition-opacity">Ajouter</button>`
-            }
-          </div>
-          <div class="flex justify-between items-center">
-            <h4 class="serif text-xl font-bold">${item.name}</h4>
-            <span class="text-[10px] font-bold opacity-40">${item.price} MAD</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    window.filterGallery = (cat) => {
-      currentFilter = cat;
-      const title = document.getElementById('galleryTitle');
-      if (title) {
-        title.innerText = cat === 'homme' ? "Vestiaire Homme" : (cat === 'femme' ? "Vestiaire Femme" : "Le Vestiaire");
-      }
-      renderGallery(cat);
-      document.getElementById('market-section')?.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    // =========================
-    // LocalStorage (GitHub)
-    // =========================
-    const LS_KEY = "khoud_articles_v1";
-
-    function loadFromLocal() {
-      try {
-        const raw = localStorage.getItem(LS_KEY);
-        articles = raw ? JSON.parse(raw) : [];
-      } catch {
-        articles = [];
-      }
-      articles.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-      renderGallery(currentFilter);
-      hideLoader();
-    }
-
-    function saveToLocal() {
-      localStorage.setItem(LS_KEY, JSON.stringify(articles));
-    }
-
-    // =========================
-    // Checkout WhatsApp (tel quel dans ton code)
+    // Checkout WhatsApp (évite blocage wa.me)
     // =========================
     document.getElementById('checkoutForm').onsubmit = (e) => {
       e.preventDefault();
 
-      const phone = "212773515753"; // ✅ 0773515753 en international
+      const phone = "212773515753";
       const name = document.getElementById('custName').value.trim();
       const city = document.getElementById('custCity').value.trim();
       const address = document.getElementById('custAddress').value.trim();
@@ -532,9 +611,8 @@ ${cart.map(i => `- ${i.name} (${i.size}) : ${i.price} MAD`).join('\n')}
 
 TOTAL: ${total} MAD`;
 
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-      window.location.href = url;
+      const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
 
       cart = [];
       updateCartBadge();
@@ -543,77 +621,105 @@ TOTAL: ${total} MAD`;
     };
 
     // =========================
-    // Admin
+    // Admin login (Google popup) - interface conservée
     // =========================
-    document.getElementById('adminLoginForm').onsubmit = (e) => {
+    document.getElementById('adminLoginForm').onsubmit = async (e) => {
       e.preventDefault();
-      const email = document.getElementById('adminEmail').value;
-      const pass = document.getElementById('adminPass').value;
 
-      if (email === 'admin@khoud.ma' && pass === 'admin123') {
+      const enteredEmail = document.getElementById('adminEmail').value.trim().toLowerCase();
+      if (enteredEmail !== ADMIN_EMAIL_ALLOWED.toLowerCase()) {
+        window.notify("Accès refusé (email admin uniquement).");
+        return;
+      }
+
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        if (!user?.email || user.email.toLowerCase() !== ADMIN_EMAIL_ALLOWED.toLowerCase()) {
+          await signOut(auth);
+          window.notify("Email Google non autorisé. Accès refusé.");
+          return;
+        }
+
         isAdmin = true;
-        closeModal('adminLoginModal');
+        window.closeModal('adminLoginModal');
         document.getElementById('adminPanel').style.display = 'block';
-        renderGallery(currentFilter);
         updateCartBadge();
-        notify("Bonjour Admin");
-      } else {
-        notify("Identifiants incorrects");
+        renderGallery(currentFilter);
+        window.notify("Bonjour Admin");
+
+      } catch (err) {
+        console.warn(err);
+        window.notify("Connexion Google annulée/bloquée.");
       }
     };
 
-    window.logoutAdmin = () => {
+    window.logoutAdmin = async () => {
+      try { await signOut(auth); } catch {}
       isAdmin = false;
       document.getElementById('adminPanel').style.display = 'none';
-      renderGallery(currentFilter);
       updateCartBadge();
-      notify("Déconnecté");
-    };
-
-    // Delete local
-    window.deleteItem = (id) => {
-      if (!confirm("Supprimer l'article ?")) return;
-      articles = articles.filter(a => a.id !== id);
-      saveToLocal();
       renderGallery(currentFilter);
-      notify("Article supprimé");
+      window.notify("Déconnecté");
+      ensureAnonymous().catch(()=>{});
     };
 
-    // Add local
-    document.getElementById('adminAddForm').onsubmit = (e) => {
+    // =========================
+    // Admin add/delete (Firestore)
+    // =========================
+    window.deleteItem = async (id) => {
+      if (!isAdmin) return window.notify("Accès refusé");
+      if (!confirm("Supprimer l'article ?")) return;
+
+      try {
+        await deleteDoc(doc(db, "articles", id));
+        window.notify("Article supprimé");
+      } catch (e) {
+        console.warn(e);
+        window.notify("Erreur suppression");
+      }
+    };
+
+    document.getElementById('adminAddForm').onsubmit = async (e) => {
       e.preventDefault();
+      if (!isAdmin) return window.notify("Accès refusé");
 
       const file = document.getElementById('adminImage').files[0];
-      if (!file) return notify("Photo requise");
+      if (!file) return window.notify("Photo requise");
 
       const btn = document.getElementById('addBtn');
       btn.disabled = true; btn.innerText = "Ajout...";
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => {
-        const item = {
-          id: "ls_" + Math.random().toString(16).slice(2),
-          name: document.getElementById('adminName').value,
-          category: document.getElementById('adminCategory').value,
-          size: document.getElementById('adminSize').value,
-          price: document.getElementById('adminPrice').value,
-          imageUrl: reader.result,
-          createdAt: new Date().toISOString()
-        };
 
-        articles.unshift(item);
-        saveToLocal();
-        renderGallery(currentFilter);
+      reader.onload = async () => {
+        try {
+          await addDoc(collection(db, "articles"), {
+            name: document.getElementById('adminName').value,
+            category: document.getElementById('adminCategory').value,
+            size: document.getElementById('adminSize').value,
+            price: document.getElementById('adminPrice').value,
+            imageUrl: reader.result,
+            createdAt: serverTimestamp()
+          });
 
-        document.getElementById('adminAddForm').reset();
+          document.getElementById('adminAddForm').reset();
+          window.notify("Article ajouté !");
+        } catch (e) {
+          console.warn(e);
+          window.notify("Erreur ajout (Firestore) — vérifie les Rules.");
+        } finally {
+          btn.disabled = false; btn.innerText = "Ajouter au catalogue";
+        }
+      };
+
+      reader.onerror = () => {
         btn.disabled = false; btn.innerText = "Ajouter au catalogue";
-        notify("Article ajouté !");
+        window.notify("Erreur lecture image");
       };
     };
-
-    // Start
-    loadFromLocal();
   </script>
 </body>
 </html>
