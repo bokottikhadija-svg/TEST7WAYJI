@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Khoud-7wayji | No cash? No drama.</title>
+  <title>Khoud-7wayji | Friperie en ligne Maroc | Seconde main & Mode circulaire</title>
+  <meta name="description" content="Khoud-7wayji : La référence de la mode de seconde main au Maroc. Achetez et vendez des vêtements d'occasion de qualité, streetwear et vintage.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
@@ -40,11 +41,9 @@
   <nav class="sticky top-0 z-[100] bg-white/80 backdrop-blur-md border-b border-[#f0f0ed]">
     <div class="max-w-[1600px] mx-auto px-6 h-20 md:h-24 flex justify-between items-center">
       <div class="flex items-center space-x-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-
         <div class="w-10 h-10 border-2 border-black flex items-center justify-center">
           <img src="assets/logo de la marque .jpg" alt="Logo Khoud-7wayji" class="w-8 h-8 object-contain" />
         </div>
-
         <div class="flex flex-col">
           <span class="serif text-xl font-bold tracking-tighter uppercase">KHOUD-7WAYJI</span>
           <span class="text-[7px] tracking-[0.4em] uppercase opacity-40 font-bold">L-STYLE DYALEK</span>
@@ -78,14 +77,14 @@
 
   <section class="max-w-[1400px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="market-locker" onclick="window.filterGallery('homme')">
-      <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1200&auto=format&fit=crop" alt="Homme">
+      <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1200&auto=format&fit=crop" alt="Vêtements Homme d'occasion Maroc">
       <div class="locker-overlay text-white">
         <h2 class="serif text-6xl italic mb-2">Hommes</h2>
         <p class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-80">Collection Streetwear & Vintage</p>
       </div>
     </div>
     <div class="market-locker" onclick="window.filterGallery('femme')">
-      <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=1200&auto=format&fit=crop" alt="Femme">
+      <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=1200&auto=format&fit=crop" alt="Vêtements Femme de seconde main">
       <div class="locker-overlay text-white">
         <h2 class="serif text-6xl italic mb-2">Femmes</h2>
         <p class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-80">Sélection Exclusive & Chic</p>
@@ -95,15 +94,16 @@
 
   <section id="about" class="max-w-[1100px] mx-auto px-6 py-32 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
     <div class="bg-gray-100 p-4">
-      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" class="w-full grayscale brightness-90" alt="Boutique Seconde Main">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" class="w-full grayscale brightness-90" alt="Boutique Seconde Main Maroc">
     </div>
     <div class="space-y-8">
       <h2 class="serif text-6xl italic">Notre Vision</h2>
       <div class="text-gray-600 space-y-4 leading-relaxed text-lg">
-        <p><strong>Khoud-7wayji</strong> est une plateforme marocaine dédiée à la seconde main et à la réutilisation de vêtements.</p>
-        <p>Nous permettons à chacun de vendre ou acheter des articles de mode tout en donnant une seconde vie aux pièces déjà aimées. Notre objectif est de rendre la mode plus accessible, plus responsable et plus durable.</p>
-        <p>Chez Khoud-7wayji, nous croyons qu’un vêtement ne se jette pas… il se partage. Rejoignez notre communauté et renouvelez votre style autrement.</p>
-        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter pour toute question ou collaboration.</p>
+        <p><strong>Khoud-7wayji</strong> est la première plateforme marocaine nouvelle génération dédiée à la <strong>mode de seconde main</strong> et à la <strong>consommation éco-responsable</strong>.</p>
+        <p>Notre mission est de démocratiser le marché du <strong>vêtement d'occasion au Maroc</strong> en offrant une alternative moderne aux friperies classiques. Nous permettons à notre communauté de vendre et d'acheter des pièces uniques, tout en favorisant la <strong>réutilisation textile</strong> et l'économie circulaire.</p>
+        <p>Chez Khoud-7wayji, nous croyons qu'un style affirmé ne doit pas se faire au détriment de la planète. En choisissant la <strong>mode durable</strong>, vous donnez une seconde vie à des articles de qualité (Streetwear, Vintage, Luxe) et contribuez à réduire l'empreinte écologique du secteur de l'habillement.</p>
+        <p>Rejoignez le mouvement de la <strong>friperie en ligne au Maroc</strong> et renouvelez votre garde-robe avec conscience et style.</p>
+        <p class="font-bold text-black italic">📩 N’hésitez pas à nous contacter pour toute question sur nos articles ou pour une collaboration.</p>
       </div>
     </div>
   </section>
@@ -226,7 +226,6 @@
     import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Firebase config (TON CONFIG)
     const firebaseConfig = {
       apiKey: "AIzaSyB7D9RKxptuYCPIZ8IQvLpjvMVoJzecoAc",
       authDomain: "khoud-7wayji.firebaseapp.com",
@@ -239,7 +238,6 @@
 
     const ADMIN_EMAIL_ALLOWED = "bokottikhadija@gmail.com";
 
-    // Loader
     const hideLoader = () => {
       const loader = document.getElementById('loader');
       if (!loader) return;
@@ -248,7 +246,6 @@
     };
     window.addEventListener('load', () => setTimeout(hideLoader, 500));
 
-    // UI
     window.notify = (msg) => {
       const el = document.getElementById('alert');
       const msgEl = document.getElementById('alertMsg');
@@ -271,23 +268,16 @@
       modal.style.display = 'none';
     };
 
-    window.onclick = (e) => {
-      if (e.target?.classList?.contains('modal')) window.closeModal(e.target.id);
-    };
-
-    // Firebase init
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // State
     let articles = [];
     let cart = [];
     let isAdmin = false;
     let currentFilter = 'all';
 
-    // IMPORTANT: on démarre le listener POUR TOUS (même visiteurs)
     const startArticlesListener = () => {
       const q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
       onSnapshot(q, (snap) => {
@@ -295,13 +285,11 @@
         renderGallery(currentFilter);
       }, (err) => {
         console.warn(err);
-        window.notify("Erreur chargement vestiaire (Firestore).");
         renderGallery(currentFilter);
       });
     };
     startArticlesListener();
 
-    // Auth admin seulement
     onAuthStateChanged(auth, (user) => {
       isAdmin = !!user?.email && user.email.toLowerCase() === ADMIN_EMAIL_ALLOWED.toLowerCase();
       document.getElementById('adminPanel').style.display = isAdmin ? 'block' : 'none';
@@ -309,7 +297,6 @@
       renderGallery(currentFilter);
     });
 
-    // Gallery
     function renderGallery(filter) {
       const container = document.getElementById('galleryContainer');
       const countEl = document.getElementById('itemCount');
@@ -349,7 +336,6 @@
       document.getElementById('market-section')?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    // Cart
     function updateCartBadge() {
       const badge = document.getElementById('cartBadge');
       const icon = document.getElementById('cartIcon');
@@ -404,7 +390,6 @@
       document.getElementById('cartTotal').innerText = `${total} MAD`;
     };
 
-    // WhatsApp
     document.getElementById('checkoutForm').onsubmit = (e) => {
       e.preventDefault();
       const phone = "212773515753";
@@ -413,17 +398,7 @@
       const address = document.getElementById('custAddress').value.trim();
       const total = cart.reduce((acc, i) => acc + Number(i.price || 0), 0);
 
-      const message =
-`COMMANDE KHOUD-7WAYJI
-
-Client: ${name}
-Ville: ${city}
-Adresse: ${address}
-
-Articles:
-${cart.map(i => `- ${i.name} (${i.size}) : ${i.price} MAD`).join('\n')}
-
-TOTAL: ${total} MAD`;
+      const message = `COMMANDE KHOUD-7WAYJI\n\nClient: ${name}\nVille: ${city}\nAdresse: ${address}\n\nArticles:\n${cart.map(i => `- ${i.name} (${i.size}) : ${i.price} MAD`).join('\n')}\n\nTOTAL: ${total} MAD`;
 
       const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
@@ -434,32 +409,24 @@ TOTAL: ${total} MAD`;
       window.notify("Commande envoyée vers WhatsApp");
     };
 
-    // Admin login (Google popup)
     document.getElementById('adminLoginForm').onsubmit = async (e) => {
       e.preventDefault();
-
       const enteredEmail = document.getElementById('adminEmail').value.trim().toLowerCase();
       if (enteredEmail !== ADMIN_EMAIL_ALLOWED.toLowerCase()) {
-        window.notify("Accès refusé (email admin uniquement).");
+        window.notify("Accès refusé.");
         return;
       }
-
       try {
         const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-
-        if (!user?.email || user.email.toLowerCase() !== ADMIN_EMAIL_ALLOWED.toLowerCase()) {
+        if (result.user.email.toLowerCase() !== ADMIN_EMAIL_ALLOWED.toLowerCase()) {
           await signOut(auth);
-          window.notify("Email Google non autorisé. Accès refusé.");
-          return;
+          window.notify("Accès refusé.");
+        } else {
+          window.closeModal('adminLoginModal');
+          window.notify("Bonjour Admin");
         }
-
-        window.closeModal('adminLoginModal');
-        window.notify("Bonjour Admin");
-
       } catch (err) {
-        console.warn(err);
-        window.notify("Connexion Google annulée/bloquée.");
+        window.notify("Erreur connexion.");
       }
     };
 
@@ -468,33 +435,26 @@ TOTAL: ${total} MAD`;
       window.notify("Déconnecté");
     };
 
-    // Admin add/delete (Firestore)
     window.deleteItem = async (id) => {
-      if (!isAdmin) return window.notify("Accès refusé");
+      if (!isAdmin) return;
       if (!confirm("Supprimer l'article ?")) return;
-
       try {
         await deleteDoc(doc(db, "articles", id));
         window.notify("Article supprimé");
       } catch (e) {
-        console.warn(e);
         window.notify("Erreur suppression");
       }
     };
 
     document.getElementById('adminAddForm').onsubmit = async (e) => {
       e.preventDefault();
-      if (!isAdmin) return window.notify("Accès refusé");
-
+      if (!isAdmin) return;
       const file = document.getElementById('adminImage').files[0];
       if (!file) return window.notify("Photo requise");
-
       const btn = document.getElementById('addBtn');
       btn.disabled = true; btn.innerText = "Ajout...";
-
       const reader = new FileReader();
       reader.readAsDataURL(file);
-
       reader.onload = async () => {
         try {
           await addDoc(collection(db, "articles"), {
@@ -505,12 +465,10 @@ TOTAL: ${total} MAD`;
             imageUrl: reader.result,
             createdAt: serverTimestamp()
           });
-
           document.getElementById('adminAddForm').reset();
           window.notify("Article ajouté !");
         } catch (e) {
-          console.warn(e);
-          window.notify("Erreur ajout (Firestore) — vérifie les Rules.");
+          window.notify("Erreur ajout.");
         } finally {
           btn.disabled = false; btn.innerText = "Ajouter au catalogue";
         }
